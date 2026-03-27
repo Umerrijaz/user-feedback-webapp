@@ -3,11 +3,13 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function POST(req) {
-  const supabase = createClient();
+export async function POST(req: Request) {
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  console.log("USER:", user); // ← add this
 
   if (user) {
     const body = await req.json();
