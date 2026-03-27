@@ -1,38 +1,75 @@
-# ShipFast — Typescript
+User Feedback Webapp
 
-Hey maker 👋 it's Marc from [ShipFast](https://shipfa.st/docs). Let's get your startup off the ground, FAST ⚡️
+A modern, full-stack user feedback platform designed to help product owners collect, manage, and prioritize feature requests from their users. Built with **Next.js**, **Supabase**, and **PostgreSQL**.
 
-<sub>**Watch/Star the repo to be notified when updates are pushed**</sub>
+## 🛠 Tech Stack
 
-## Get Started
+  * **Framework:** [Next.js (App Router)](https://nextjs.org/)
+  * **Database & Auth:** [Supabase](https://supabase.com/)
+  * **Styling:** [Tailwind CSS](https://tailwindcss.com/) & [DaisyUI](https://daisyui.com/)
+  * **Payments:** [Stripe](https://stripe.com/)
+  * **Language:** TypeScript
 
-1. Follow the [Get Started Tutorial](https://shipfa.st/docs) to clone the repo and run your local server 💻
+## 📂 Database Architecture
 
-<sub>**Looking for the /pages router version?** Use this [documentation](https://shipfa.st/docs-old) instead</sub>
+This application uses a relational PostgreSQL schema to manage data integrity and complex relationships:
 
-2. Follow the [Ship In 5 Minutes Tutorial](https://shipfa.st/docs/tutorials/ship-in-5-minutes) to learn the foundation and ship your app quickly ⚡️
+  * **`profiles`**: Stores user-specific data. Automatically synchronized with Supabase Auth via database triggers.
+  * **`boards`**: Dedicated spaces for different products or feedback categories.
+  * **`posts`**: Individual feedback entries, ideas, or bug reports.
+  * **`votes`**: Tracks user engagement. Unique constraints ensure one vote per user per post.
 
-## Links
+## 🚀 Getting Started
 
--   [📚 Documentation](https://shipfa.st/docs)
--   [📣 Updates](https://shipfast.beehiiv.com/)
--   [🧑‍💻 Discord](https://shipfa.st/dashboard)
--   [🥇 Leaderboard](https://shipfa.st/leaderboard)
+### 1\. Clone and Install
 
-## Support
+```bash
+git clone https://github.com/Umerrijaz/user-feedback-webapp.git
+cd user-feedback-webapp
+npm install
+```
 
-Reach out at hello@shipfa.st
+### 2\. Environment Configuration
 
-Let's ship it, FAST ⚡️
+Create a `.env.local` file in the root directory and add your Supabase credentials:
 
-\_
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
 
-**📈 Grow your startup with [DataFast](https://datafa.st?ref=shipfast_readme)**
+### 3\. Database Initialization
 
--   Analyze your traffic
--   Get insights on your customers
--   Make data-driven decisions
+1.  Run the provided SQL scripts in your Supabase SQL Editor to generate the necessary tables.
+2.  Enable **Row Level Security (RLS)** to protect user data.
+3.  Set up the `handle_new_user` function and trigger to automate profile creation.
 
-ShipFast members get 30% OFF on all plans! 🎁
+### 4\. Launch Development Server
 
-![datafast](https://github.com/user-attachments/assets/2a9710f8-9a39-4593-b4bf-9ee933529870)
+```bash
+npm run dev
+```
+
+Visit [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) to view your application locally.
+
+## 🔒 Security & Permissions
+
+Security is handled at the database level using **Row Level Security (RLS)**:
+
+  * **Public Access:** Anyone can view boards and posts.
+  * **Authenticated Access:** Logged-in users can create posts and cast votes.
+  * **Owner Access:** Users can only modify or delete their own profiles and content.
+
+-----
+
+### How to update your repo:
+
+1.  Open your `README.md` file in VS Code.
+2.  Paste the text above.
+3.  Run these commands to update your GitHub:
+    ```bash
+    git add README.md
+    git commit -m "docs: clean readme without boilerplate mentions"
+    git push origin supabase
+    ```
