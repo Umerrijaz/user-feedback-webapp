@@ -1,17 +1,37 @@
-import ButtonAccount from "@/components/ButtonAccount";
+"use client";
 
-export const dynamic = "force-dynamic";
+import { useState } from "react";
+import apiClient from "@/libs/api";
 
-// This is a private page: It's protected by the layout.js component which ensures the user is authenticated.
-// It's a server compoment which means you can fetch data (like the user profile) before the page is rendered.
-// See https://shipfa.st/docs/tutorials/private-page
-export default async function Dashboard() {
+const UserProfile = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const saveUser = async () => {
+    setIsLoading(true);
+    try {
+      // CHANGED: Sending "name" to match your profiles table columns
+      const { data } = await apiClient.post("/user", {
+        name: "Umer Riaz",
+      });
+      console.log(data);
+      alert("Success! Check your Supabase dashboard.");
+    } catch (e) {
+      console.error(e?.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <main className="min-h-screen p-8 pb-24">
-      <section className="max-w-xl mx-auto space-y-8">
-        <ButtonAccount />
-        <h1 className="text-3xl md:text-4xl font-extrabold">Private Page</h1>
-      </section>
-    </main>
+    <div className="p-8">
+      <button className="btn btn-primary" onClick={() => saveUser()}>
+        {isLoading && (
+          <span className="loading loading-spinner loading-sm"></span>
+        )}
+        Save My Name
+      </button>
+    </div>
   );
-}
+};
+
+export default UserProfile;
