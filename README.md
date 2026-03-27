@@ -63,14 +63,4 @@ Security is handled at the database level using **Row Level Security (RLS)**:
 
 -----
 
-### How to update your repo:
-
-1.  Open your `README.md` file in VS Code.
-2.  Paste the text above.
-3.  Run these commands to update your GitHub:
-    ```bash
-    git add README.md
-    git commit -m "docs: clean readme without boilerplate mentions"
-    git push origin supabase
-    ```
 
