@@ -1,5 +1,4 @@
-User Feedback Webapp
-
+🚀 User Feedback Webapp
 A modern, full-stack user feedback platform designed to help product owners collect, manage, and prioritize feature requests from their users. Built with **Next.js**, **Supabase**, and **PostgreSQL**.
 
 ## 🛠 Tech Stack
