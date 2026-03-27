@@ -1,5 +1,4 @@
-🚀 User Feedback Webapp
-
+# 🚀 User Feedback Webapp
 
 A modern, full-stack user feedback platform designed to help product owners collect, manage, and prioritize feature requests from their users. Built with **Next.js**, **Supabase**, and **PostgreSQL**.
 
@@ -74,3 +73,4 @@ Security is handled at the database level using **Row Level Security (RLS)**:
     git commit -m "docs: clean readme without boilerplate mentions"
     git push origin supabase
     ```
+
