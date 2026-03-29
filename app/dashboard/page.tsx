@@ -1,37 +1,26 @@
-"use client";
+import ButtonAccount from "@/components/ButtonAccount";
+import ButtonLogout from "@/components/ButtonLogout";
+import FormNewBoard from "@/components/FormNewBoard";
 
-import { useState } from "react";
-import apiClient from "@/libs/api";
-
-const UserProfile = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const saveUser = async () => {
-    setIsLoading(true);
-    try {
-      // CHANGED: Sending "name" to match your profiles table columns
-      const { data } = await apiClient.post("/user", {
-        name: "Umer Riaz",
-      });
-      console.log(data);
-      alert("Success! Check your Supabase dashboard.");
-    } catch (e) {
-      console.error(e?.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+export default function Dashboard() {
   return (
-    <div className="p-8">
-      <button className="btn btn-primary" onClick={() => saveUser()}>
-        {isLoading && (
-          <span className="loading loading-spinner loading-sm"></span>
-        )}
-        Save My Name
-      </button>
-    </div>
-  );
-};
+    <main className="bg-base-200 min-h-screen p-8">
+      {/* HEADER SECTION */}
+      <section className="flex justify-between items-center mb-12">
+        <h1 className="text-3xl font-extrabold">Private Dashboard</h1>
+        <ButtonAccount />
+      </section>
 
-export default UserProfile;
+      <section>
+        <div className="bg-base-100 px5 py3 flex justify-end">
+          <ButtonLogout />
+        </div>
+      </section>
+
+      {/* CONTENT SECTION */}
+      <section className="max-w-5xl mx-auto px3 py12">
+        <FormNewBoard />
+      </section>
+    </main>
+  );
+}
