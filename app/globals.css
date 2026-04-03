@@ -1,7 +1,6 @@
-@import "tailwindcss";
-@plugin "daisyui" {
-  themes: all;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @theme {
   --font-display: "Satoshi", "sans-serif";

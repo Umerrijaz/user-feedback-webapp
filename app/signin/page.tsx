@@ -1,15 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { createClient } from "@/libs/supabase/client";
-import { Provider } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
 import config from "@/config";
+import Link from "next/link";
+import { Provider } from "@supabase/supabase-js";
 
-// This a login/singup page for Supabase Auth.
-// Successfull login redirects to /api/auth/callback where the Code Exchange is processed (see app/api/auth/callback/route.js).
-export default function Login() {
+export default function SigninPage() {
   const supabase = createClient();
   const [email, setEmail] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -17,36 +15,24 @@ export default function Login() {
 
   const handleSignup = async (
     e: any,
-    options: {
-      type: string;
-      provider?: Provider;
-    }
+    options: { type: string; provider?: Provider },
   ) => {
     e?.preventDefault();
-
     setIsLoading(true);
-
     try {
       const { type, provider } = options;
       const redirectURL = window.location.origin + "/api/auth/callback";
-
       if (type === "oauth") {
         await supabase.auth.signInWithOAuth({
           provider,
-          options: {
-            redirectTo: redirectURL,
-          },
+          options: { redirectTo: redirectURL },
         });
       } else if (type === "magic_link") {
         await supabase.auth.signInWithOtp({
           email,
-          options: {
-            emailRedirectTo: redirectURL,
-          },
+          options: { emailRedirectTo: redirectURL },
         });
-
         toast.success("Check your emails!");
-
         setIsDisabled(true);
       }
     } catch (error) {
@@ -76,9 +62,8 @@ export default function Login() {
         </Link>
       </div>
       <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-center mb-12">
-        Sign-in to {config.appName}{" "}
+        Sign-in to {config.appName}
       </h1>
-
       <div className="space-y-8 max-w-xl mx-auto">
         <button
           className="btn btn-block"
@@ -115,11 +100,9 @@ export default function Login() {
           )}
           Sign-up with Google
         </button>
-
         <div className="divider text-xs text-base-content/50 font-medium">
           OR
         </div>
-
         <form
           className="form-control w-full space-y-4"
           onSubmit={(e) => handleSignup(e, { type: "magic_link" })}
@@ -133,7 +116,6 @@ export default function Login() {
             className="input input-bordered w-full placeholder:opacity-60"
             onChange={(e) => setEmail(e.target.value)}
           />
-
           <button
             className="btn btn-primary btn-block"
             disabled={isLoading || isDisabled}

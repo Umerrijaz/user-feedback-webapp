@@ -1,19 +1,52 @@
-import ButtonAccount from "@/components/ButtonAccount";
-import FormNewBoard from "@/components/FormNewBoard";
+"use client";
 
-export default function Dashboard() {
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import apiClient from "@/libs/api";
+
+export default function FormNewBoard() {
+  const [boardName, setBoardName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const data = await apiClient.post("/boards", {
+        name: boardName,
+      });
+
+      console.log("Board created:", data);
+      setBoardName("");
+      router.refresh(); // ← automatically refreshes the board list
+    } catch (error) {
+      console.error("Error creating board:", error);
+      alert("Failed to create board. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <main data-theme="synthwave" className="bg-base-200 min-h-screen p-8">
-      {/* HEADER SECTION */}
-      <section className="flex justify-between items-center mb-12">
-        <h1 className="text-3xl font-extrabold">Private Dashboard</h1>
-        <ButtonAccount />
-      </section>
-
-      {/* CONTENT SECTION */}
-      <section className="max-w-5xl mx-auto px3 py12">
-        <FormNewBoard />
-      </section>
-    </main>
+    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+      <input
+        required
+        type="text"
+        className="px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+        placeholder="Enter board name"
+        value={boardName}
+        onChange={(e) => setBoardName(e.target.value)}
+        disabled={isSubmitting}
+      />
+      <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+        {isSubmitting ? (
+          <span className="loading loading-spinner loading-sm"></span>
+        ) : (
+          "Create Board"
+        )}
+      </button>
+    </form>
   );
 }
