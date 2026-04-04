@@ -1,15 +1,28 @@
-import UserCard from "@/components/UserCard";
+import { Suspense } from "react";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import Problem from "@/components/Problem";
+import FeaturesAccordion from "@/components/FeaturesAccordion";
+import Pricing from "@/components/Pricing";
+import FAQ from "@/components/FAQ";
+import CTA from "@/components/CTA";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1>Dashboard</h1>
-      <hr />
-
-      {/* Rendering multiple instances of your component */}
-      <div style={{ display: "flex", gap: "20px" }}>
-        <UserCard />
-      </div>
-    </main>
+    <div data-theme="synthwave">
+      <Suspense>
+        <Header />
+      </Suspense>
+      <main>
+        <Hero />
+        <Problem />
+        <FeaturesAccordion />
+        <Pricing />
+        <FAQ />
+        <CTA />
+      </main>
+      <Footer />
+    </div>
   );
 }
